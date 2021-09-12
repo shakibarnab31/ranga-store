@@ -1,3 +1,10 @@
+const productDetails = document.getElementById('product-details');
+
+// clear 
+productDetails.innerHTML = '';
+
+// load products 
+
 const loadProducts = () => {
   const url = `https://fakestoreapi.com/products`;
   fetch(url)
@@ -10,6 +17,7 @@ loadProducts();
 const showProducts = (products) => {
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
+    console.log(product)
     const image = product.images;
     const div = document.createElement("div");
     div.classList.add("product");
@@ -21,11 +29,24 @@ const showProducts = (products) => {
       <p>Category: ${product.category}</p>
       <h2>Price: $ ${product.price}</h2>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" class="btn btn-danger">Details</button></div>
+      <button onclick="showdetails('${product.id}')" id="details-btn" class="btn btn-danger">Details</button></div>
       `;
     document.getElementById("all-products").appendChild(div);
   }
 };
+// product details function
+const showdetails = (id) => {
+  const url = `https://fakestoreapi.com/products/${id}`
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      productDetails.innerHTML = `
+    <p class="text-center">Category: ${data.category}</p>
+    <p class="text-center">Title: ${data.title}</p>
+    `
+    })
+
+}
 let count = 0;
 const addToCart = (id, price) => {
   count = count + 1;
