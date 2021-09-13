@@ -15,18 +15,23 @@ loadProducts();
 
 // show all product in UI 
 const showProducts = (products) => {
-  const allProducts = products.map((pd) => pd);
-  for (const product of allProducts) {
-    console.log(product)
-    const image = product.images;
+  // the below line isn't necessary so I commented out
+  // const allProducts = products.map((pd) => pd);
+
+  for (const product of products) {
+    // the below line isn't necessary so I commented out
+    // const image = product.images;
     const div = document.createElement("div");
     div.classList.add("product");
     div.innerHTML = `<div class="single-product">
       <div>
     <img class="product-image" src=${product.image}></img>
       </div>
-      <h3>${product.title}</h3>
+      <h5>${product.title}</h5>
       <p>Category: ${product.category}</p>
+      <p>Total Rated: ${product.rating.count}</p>
+      <p>Rating: ${product.rating.rate}</p>
+
       <h2>Price: $ ${product.price}</h2>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
       <button onclick="showdetails('${product.id}')" id="details-btn" class="btn btn-danger">Details</button></div>
